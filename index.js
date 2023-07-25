@@ -5,24 +5,14 @@ const app = express();
 // Specify the port to use for this server
 const port = 3000;
 
+// Load product repository module
+const repo = require("./repositories/product-file.js");
+
 // GET route
 app.get("/", (req, res, next) => {
-    let products = [{
-        "productID": 879,
-        "name": "All purpose bike stand"
-    }, {
-        "productID": 712,
-        "name": "AWC logo cap"
-    }, {
-        "productID": 877,
-        "name": "Bike wash - Dissolver"
-    },{
-        "productID": 843,
-        "name": "Cable lock"
-    },{
-        "productID": 952,
-        "name": "Chain"
-    }];
+    // Get products from repository
+    let products = repo.get();
+    
     res.json({
         "status": 200,
         "statusText": "OK",
