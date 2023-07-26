@@ -11,14 +11,20 @@ const repo = require("./repositories/product-file.js");
 // GET route
 app.get("/", (req, res, next) => {
     // Get products from repository
-    let products = repo.get();
-    
-    res.json({
-        "status": 200,
-        "statusText": "OK",
-        "message": "All products retrieved.",
-        "data": products
-    });
+    let products = repo.get(
+        function (data) {
+            // SUCCESS: Send response
+            res.json({
+                "status": 200,
+                "statusText": "OK",
+                "message": "All products retrieved.",
+                "data": data
+            });
+        }, function (err) {
+            // ERROR: Send error response
+            next(err);
+        }
+    );
 });
 
 // Create web server to listen to requests on the specified port
