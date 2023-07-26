@@ -21,4 +21,24 @@ repo.get = function (resolve, reject) {
             resolve(products);
         }
     });
-}
+};
+
+// Retrieve a single product object
+repo.getById = function (id, resolve, reject) {
+    fs.readFile(DATA_FILE, function (err, data) {
+        if (err) {
+            // ERROR: invoke reject() callback
+            reject(err);
+        }
+        else {
+            // SUCCESS: Convert data to JSON
+            let products = JSON.parse(data);
+            // Find the row by productID
+            let product = products.find(
+                row => row.productID == id);
+            // Invoke resolve() callback
+            // product is 'undefined' if not found
+            resolve(product);
+        }
+    });
+};
